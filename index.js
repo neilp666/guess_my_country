@@ -29,7 +29,31 @@ var handler = {
     var question = arr[0].Q;
     var q = "<break time='0.5s'/>" + question.split('').join("<break time='0.5s'/>") + "<break time='0.5s'/>";
     var qc = question.split('').join("  ");
-    var speech = "Welcome to Guess My Country, let's begin, here are your jumbled letters " + q + ". Guess the word, you have 3 attempts left ";
+    var speech = "Welcome back, here are your jumbled letters " + q + ". Guess the country, you have " + count + " attempts left ";
     this.emit(":askWithCard", speech, speech, "Guess My Country", qc);
   },
-}
+  "resume": function() {
+    var index = this.attributes.Game.index;
+    var count = this.attributes.Game.count;
+    var question = arr[index].Q;
+    var q = "<break time='0.5s'/>" + question.split('').join("<break time='0.5s'/>") + "<break time='0.5s'/>";
+    var qc = question.split('').join("  ");
+    var speech = "Welcome back, here are your jumbled letters " + q + ". Guess the country, you have " + count + " attempts left ";
+    this.emit(":askWithCard", speech, speech, "Guess My Country", qc);
+  },
+
+  "AMAZON.StartOverIntent": function() {
+    if(this.attributes.Game.score === undefined) {
+        this.emit('start');
+    } else {
+        var speech = "You have already played the game. Your score is " + this.attributes.Game.score + ". To resume your game say, resume my game, or to delete your previous game and start again, say delete my previous game";
+        this.emit(':ask', speech, speech)
+    }
+  },
+  "AMAZON.ResumeIntent": function() {
+    this.emit('resume')
+  },
+  "DeleteIntent": function() {
+    this.emit('start')
+  }
+};
