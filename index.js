@@ -8,7 +8,7 @@ var arr = [{"Q":"dcha","A":"chad"},
 exports.handler = function(event,context,callback) {
   var alexa = Alexa.handler(event,context, callback);
   alexa.dynamoDBTableName = "CountryLetters";
-  alexa.appId = "<APP ID>";
+  alexa.appId = "";
   alexa.registerHandlers(handler);
     initialize(event, function() {
       alexa.execute();
@@ -29,7 +29,7 @@ var handler = {
     var question = arr[0].Q;
     var q = "<break time='0.5s'/>" + question.split('').join("<break time='0.5s'/>") + "<break time='0.5s'/>";
     var qc = question.split('').join("  ");
-    var speech = "Welcome back, here are your jumbled letters " + q + ". Guess the country, you have " + count + " attempts left ";
+    var speech = "Welcome to Guess the country, let's begin, here are your jumbled letters " + q + ". Guess the country, you have 3 attempts left ";
     this.emit(":askWithCard", speech, speech, "Guess My Country", qc);
   },
   "resume": function() {
@@ -38,7 +38,7 @@ var handler = {
     var question = arr[index].Q;
     var q = "<break time='0.5s'/>" + question.split('').join("<break time='0.5s'/>") + "<break time='0.5s'/>";
     var qc = question.split('').join("  ");
-    var speech = "Welcome back, here are your jumbled letters " + q + ". Guess the country, you have " + count + " attempts left ";
+    var speech = "Welcome back, to Guess the country, here are your jumbled letters " + q + ". Guess the country, you have " + count + " attempts left ";
     this.emit(":askWithCard", speech, speech, "Guess My Country", qc);
   },
 
