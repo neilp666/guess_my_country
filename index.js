@@ -50,6 +50,44 @@ var handler = {
         this.emit(':ask', speech, speech)
     }
   },
+  "AnswerIntent": function() {
+    var guess = this.event.request.intent.slots.Guess.value;
+    var l1 = this.event.request.intent.slots.LetterOne.value;
+    var l2 = this.event.request.intent.slots.LetterTwo.value;
+    var l3 = this.event.request.intent.slots.LetterThree.value;
+    var l4 = this.event.request.intent.slots.LetterFour.value;
+    var index = this.attributes.Game.index;
+    var count = this.attributes.Game.count;
+    var answer = arr[index].A;
+    var a = answer.split('');
+    if(guess !== undefined && l1 !== undefined && l2 !== undefined && l3 !== undefined && 14 !== undefined){
+      l1 = l1.toLowerCase();
+      l2 = l2.toLowerCase();
+      l3 = l3.toLowerCase();
+      l4 = l4.toLowerCase();
+      if(guess === answer && l1 === a[0] || l1 === a[0] + "." ) && (l2 === a[1] || l2 === a[1] + "." ) && (l3 === a[2] || l3 === a[2] + "." ) && (l4 === a[3] || l4 === a[3] + "." ))
+          this.attributes.Game.score += 1;
+          var score = this.attributes.Game.score;
+          var speech = "Well Done,  you have guessed it right in " + (4-count) + " attempts. Your score is " + score + ". Do you wish to play again? say Yes to play again an No to quit."
+          this.emit(":ask", speech, speech);
+      } else {
+          this.attributes.Game.count -= 1;
+          count = this.attributes.Game.count;
+          var question = arr[index].Q;
+          var q = "<break time='0.5s'/>" + question.split('').join("<break time='0.5s'/>") + "<break time = '0.5s'/>";
+          if(count > 0){
+            var speech1 = "Please try again, your jumbled letters were " + q + ". You have " + count + " attempts left";
+            this.emit(":ask", speech1, speech1);
+          } else {
+            var ans = "<break time = '0.5s'/>" + answer.split('').join("<break time='0.5s'/>") + "<break time='0.5s'/>";
+            var speech2 = "Sorry, there are no attempts left, the correct country is " + ans + answer + ". Do you wish to play again? say Yes to play again and no to quit";
+            this.emit(":ask", speech2, speech2);
+          }
+      }
+    } else {
+        this.emit(":ask", "Please guess by spelling out the country", "Please guess by spelling the country");
+    }
+  },
   "AMAZON.ResumeIntent": function() {
     this.emit('resume')
   },
