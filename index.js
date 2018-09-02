@@ -88,10 +88,45 @@ var handler = {
         this.emit(":ask", "Please guess by spelling out the country", "Please guess by spelling the country");
     }
   },
+  "AMAZON.YesIntent": function() {
+    if(this.attributes.Game.index === arr.length - 1)
+        this.attributes.Game.end = 1;
+        var score = this.attributes.Game.score;
+        var speech = "I have asked all the questions that I have, you have scored " + score + " If you wish to delete this game and start over again say delete my previous game";
+        this.emit(":ask",speech, speech);
+  } else {
+      this.attributes.Game.index +=1;
+      this.attributes.Game.count = 3;
+      this.emit('resume');
+    }
+  },
+  "AMAZON.NoIntent": function() {
+    if(this.attributes.Game.index === arr.length - 1)
+        this.attributes.Game.end = 1;
+        var score = this.attributes.Game.score;
+        var speech = "I have asked all the questions that I have, you have scored " + score + " If you wish to delete this game and start over again say delete my previous game";
+        this.emit(":ask",speech, speech);
+  } else {
+      this.attributes.Game.index +=1;
+      this.attributes.Game.count = 3;
+      this.emit('resume');
+    }
+  },
+  "AMAZON.NoIntent": function() {
+    if(this.attributes.Game.index === arr.length -1) {
+      this.attributes.Game.end = 1;
+      this.emit(":tell", "Thank You");
+    } else {
+      this.attributes.Game.index += 1;
+      this.attributes.Game.count = 3;
+      this.emit(":tell", "Thank You");
+    }
+  },
   "AMAZON.ResumeIntent": function() {
     this.emit('resume')
   },
   "DeleteIntent": function() {
+    this.attributes.Game.end = 0;
     this.emit('start')
   }
 };
