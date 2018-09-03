@@ -47,10 +47,10 @@ var handler = {
     } else if (this.attributes.Game.end === 1) {
         var score = this.attributes.Game.score;
         var speech1 = "I have asked all the questions that I have, you have scored " + score + "if you wish to delete this game and start over again , say delete my previous game"
-        this.emit(":ask", speech1, speech1);
+        this.emit(":askWithCard", speech1, speech1);
     } else {
         var speech = "You have already played the game. Your score is " + this.attributes.Game.score + ". To resume your game say, resume my game, or to delete your previous game and start again, say delete my previous game";
-        this.emit(':ask', speech, speech)
+        this.emit(':askWithCard', speech, speech)
     }
   },
 
@@ -60,10 +60,10 @@ var handler = {
     } else if (this.attributes.Game.end === 1) {
         var score = this.attributes.Game.score;
         var speech1 = "I have asked all the questions that I have, you have scored " + score + "if you wish to delete this game and start over again , say delete my previous game"
-        this.emit(":ask", speech1, speech1);
+        this.emit(":askWithCard", speech1, speech1);
     } else {
         var speech = "You have already played the game. Your score is " + this.attributes.Game.score + ". To resume your game say, resume my game, or to delete your previous game and start again, say delete my previous game";
-        this.emit(':ask', speech, speech)
+        this.emit(':askWithCard', speech, speech)
     }
   },
   "AnswerIntent": function() {
@@ -85,7 +85,7 @@ var handler = {
           this.attributes.Game.score += 1;
           var score = this.attributes.Game.score;
           var speech = "Well Done,  you have guessed it right in " + (4-count) + " attempts. Your score is " + score + ". Do you wish to play again? say Yes to play again an No to quit."
-          this.emit(":ask", speech, speech);
+          this.emit(":askWithCard", speech, speech);
       } else {
           this.attributes.Game.count -= 1;
           count = this.attributes.Game.count;
@@ -93,15 +93,15 @@ var handler = {
           var q = "<break time='0.5s'/>" + question.split('').join("<break time='0.5s'/>") + "<break time = '0.5s'/>";
           if(count > 0){
             var speech1 = "Please try again, your jumbled letters were " + q + ". You have " + count + " attempts left";
-            this.emit(":ask", speech1, speech1);
+            this.emit(":askWithCard", speech1, speech1);
           } else {
             var ans = "<break time = '0.5s'/>" + answer.split('').join("<break time='0.5s'/>") + "<break time='0.5s'/>";
             var speech2 = "Sorry, there are no attempts left, the correct country is " + ans + answer + ". Do you wish to play again? say Yes to play again and no to quit";
-            this.emit(":ask", speech2, speech2);
+            this.emit(":askWithCard", speech2, speech2);
           }
       }
     } else {
-        this.emit(":ask", "Please guess by spelling out the country", "Please guess by spelling the country");
+        this.emit(":askWithCard", "Please guess by spelling out the country", "Please guess by spelling the country");
     }
   },
   "AMAZON.YesIntent": function() {
@@ -109,7 +109,7 @@ var handler = {
         this.attributes.Game.end = 1;
         var score = this.attributes.Game.score;
         var speech = "I have asked all the questions that I have, you have scored " + score + " If you wish to delete this game and start over again say delete my previous game";
-        this.emit(":ask",speech, speech);
+        this.emit(":askWithCard",speech, speech);
   } else {
       this.attributes.Game.index +=1;
       this.attributes.Game.count = 3;
@@ -121,7 +121,7 @@ var handler = {
         this.attributes.Game.end = 1;
         var score = this.attributes.Game.score;
         var speech = "I have asked all the questions that I have, you have scored " + score + " If you wish to delete this game and start over again say delete my previous game";
-        this.emit(":ask",speech, speech);
+        this.emit(":askWithCard",speech, speech);
   } else {
       this.attributes.Game.index +=1;
       this.attributes.Game.count = 3;
@@ -141,12 +141,12 @@ var handler = {
   "AMAZON.ResumeIntent": function() {
     if(this.attributes.Game.score === undefined) {
       var speech = "You have not started the game yet, to start the game say, start a game"
-      this.emit(":ask",speech ,speech)
+      this.emit(":askWithCard",speech ,speech)
     }
     else if (this.attributes.Game.end === 1) {
         var score = this.attributes.Game.score;
         var speech1 = "I have asked all the questions that I have, you have scored " + score + "if you wish to delete this game and start over again , say delete my previous game"
-        this.emit(":ask", speech1, speech1);
+        this.emit(":askWithCard", speech1, speech1);
     } else {
         this.emit('resume');
     }
@@ -154,7 +154,7 @@ var handler = {
   "DeleteIntent": function() {
     if(this.attributes.Game.score === undefined) {
         var speech = "You have not started the game yet, to start the game say, start a game";
-        this.emit(":ask", speech, speech);
+        this.emit(":askWithCard", speech, speech);
     } else {
         this.attributes.Game.end = 0;
         this.emit('start');
@@ -167,6 +167,6 @@ var handler = {
     this.emit(":tell", "Thank you")
   },
   "AMAZON.HelpIntent": function() {
-    this.emit(":ask", "I will spell out the Jumbled letters of a country, you have to guess the country by spelling out the letters in the right order and also say the country, to continue say, reusme my game, or to start from the beginning say, delete my previous game,","I will spell out the Jumbled letters of a country, you have to guess the country by spelling out the letters in the right order and also say the country, to continue say, reusme my game, or to start from the beginning say, delete my previous game,");
+    this.emit(":askWithCard", "I will spell out the Jumbled letters of a country, you have to guess the country by spelling out the letters in the right order and also say the country, to continue say, reusme my game, or to start from the beginning say, delete my previous game,","I will spell out the Jumbled letters of a country, you have to guess the country by spelling out the letters in the right order and also say the country, to continue say, reusme my game, or to start from the beginning say, delete my previous game,");
   }
 };
