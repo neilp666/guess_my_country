@@ -167,6 +167,6 @@ var handler = {
     this.emit(":tell", "Thank you")
   },
   "AMAZON.HelpIntent": function() {
-    this.emit(":ask", "I will spell out the Jumbled letters of a country, you have to guess the country by spelling out the letters in the right order and also say the country, to continue say, reusme my game")
+    this.emit(":ask", "I will spell out the Jumbled letters of a country, you have to guess the country by spelling out the letters in the right order and also say the country, to continue say, reusme my game, or to start from the beginning say, delete my previous game,","I will spell out the Jumbled letters of a country, you have to guess the country by spelling out the letters in the right order and also say the country, to continue say, reusme my game, or to start from the beginning say, delete my previous game,");
   }
 };
