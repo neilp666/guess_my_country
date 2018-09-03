@@ -76,7 +76,7 @@ var handler = {
     var count = this.attributes.Game.count;
     var answer = arr[index].A;
     var a = answer.split('');
-    if(guess !== undefined && l1 !== undefined && l2 !== undefined && l3 !== undefined && 14 !== undefined){
+    if(guess !== undefined && l1 !== undefined && l2 !== undefined && l3 !== undefined && l4 !== undefined){
       l1 = l1.toLowerCase();
       l2 = l2.toLowerCase();
       l3 = l3.toLowerCase();
