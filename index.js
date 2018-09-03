@@ -139,7 +139,11 @@ var handler = {
     }
   },
   "AMAZON.ResumeIntent": function() {
-    if (this.attributes.Game.end === 1) {
+    if(this.attributes.Game.score === undefined) {
+      var speech = "You have not started the game yet, to start the game say, start a game"
+      this.emit(":ask",speech ,speech)
+    }
+    else if (this.attributes.Game.end === 1) {
         var score = this.attributes.Game.score;
         var speech1 = "I have asked all the questions that I have, you have scored " + score + "if you wish to delete this game and start over again , say delete my previous game"
         this.emit(":ask", speech1, speech1);
@@ -148,10 +152,21 @@ var handler = {
     }
   },
   "DeleteIntent": function() {
-    this.attributes.Game.end = 0;
-    this.emit('start')
+    if(this.attributes.Game.score === undefined) {
+        var speech = "You have not started the game yet, to start the game say, start a game";
+        this.emit(":ask", speech, speech);
+    } else {
+        this.attributes.Game.end = 0;
+        this.emit('start');
+    }
   },
   "AMAZON.StopIntent": function() {
     this.emit(":tell", "Thank You");
+  },
+  "AMAZON.CancelIntent": function() {
+    this.emit(":tell", "Thank you")
+  },
+  "AMAZON.HelpIntent": function() {
+    this.emit(":ask", "I will spell out the Jumbled letters of a country, you have to guess the country by spelling out the letters in the right order and also say the country, to continue say, reusme my game")
   }
 };
