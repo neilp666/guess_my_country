@@ -41,6 +41,18 @@ var handler = {
     var speech = "Welcome back, to Guess the country, here are your jumbled letters " + q + ". Guess the country, you have " + count + " attempts left ";
     this.emit(":askWithCard", speech, speech, "Guess My Country", qc);
   },
+  "LaunchRequest": function() {
+    if(this.attributes.Game.score === undefined) {
+        this.emit('start');
+    } else if (this.attributes.Game.end === 1) {
+        var score = this.attributes.Game.score;
+        var speech1 = "I have asked all the questions that I have, you have scored " + score + "if you wish to delete this game and start over again , say delete my previous game"
+        this.emit(":ask", speech1, speech1);
+    } else {
+        var speech = "You have already played the game. Your score is " + this.attributes.Game.score + ". To resume your game say, resume my game, or to delete your previous game and start again, say delete my previous game";
+        this.emit(':ask', speech, speech)
+    }
+  },
 
   "AMAZON.StartOverIntent": function() {
     if(this.attributes.Game.score === undefined) {
@@ -138,5 +150,8 @@ var handler = {
   "DeleteIntent": function() {
     this.attributes.Game.end = 0;
     this.emit('start')
+  },
+  "AMAZON.StopIntent": function() {
+    this.emit(":tell", "Thank You");
   }
 };
