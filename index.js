@@ -81,7 +81,7 @@ var handler = {
       l2 = l2.toLowerCase();
       l3 = l3.toLowerCase();
       l4 = l4.toLowerCase();
-      if(guess === answer && l1 === a[0] || l1 === a[0] + "." ) && (l2 === a[1] || l2 === a[1] + "." ) && (l3 === a[2] || l3 === a[2] + "." ) && (l4 === a[3] || l4 === a[3] + "." ))
+      if (guess === answer && (l1 === a[0] || l1 === a[0] + ".") && (l2 === a[1] || l2 === a[1] + ".") && (l3 === a[2] || l3 === a[2] + ".") &&  (l4 === a[3] || l4 === a[3] + ".")){
           this.attributes.Game.score += 1;
           var score = this.attributes.Game.score;
           var speech = "Well Done,  you have guessed it right in " + (4-count) + " attempts. Your score is " + score + ". Do you wish to play again? say Yes to play again an No to quit."
