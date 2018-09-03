@@ -168,5 +168,8 @@ var handler = {
   },
   "AMAZON.HelpIntent": function() {
     this.emit(":askWithCard", "I will spell out the Jumbled letters of a country, you have to guess the country by spelling out the letters in the right order and also say the country, to continue say, reusme my game, or to start from the beginning say, delete my previous game,","I will spell out the Jumbled letters of a country, you have to guess the country by spelling out the letters in the right order and also say the country, to continue say, reusme my game, or to start from the beginning say, delete my previous game,");
+  },
+  "Unhandled": function() {
+    this.emit(":tell", "I did not get any response from you , please open the skill again");
   }
 };
